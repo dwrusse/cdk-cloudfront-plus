@@ -256,7 +256,7 @@ export class ConvertQueryString extends Custom {
       runtime: lambda.Runtime.NODEJS_12_X,
       bundling: {
         define: {
-          NEEDED_KEYS: jsonStringifiedBundlingDefinition(props.args),
+          NEEDED_KEYS: JSON.stringify(props.args),
         },
       },
     });
@@ -333,7 +333,7 @@ export class AccessOriginByGeolocation extends Custom {
       runtime: lambda.Runtime.NODEJS_12_X,
       bundling: {
         define: {
-          'process.env.COUNTRY_CODE_TABLE': jsonStringifiedBundlingDefinition(props.countryTable),
+          'process.env.COUNTRY_CODE_TABLE': JSON.stringify(props.countryTable),
         },
       },
     });
@@ -365,7 +365,7 @@ export class RedirectByGeolocation extends Custom {
       runtime: lambda.Runtime.NODEJS_12_X,
       bundling: {
         define: {
-          'process.env.COUNTRY_CODE_TABLE': jsonStringifiedBundlingDefinition(props.countryTable),
+          'process.env.COUNTRY_CODE_TABLE': JSON.stringify(props.countryTable),
         },
       },
     });
@@ -422,15 +422,15 @@ export class OAuth2AuthorizationCodeGrant extends Custom {
       runtime: lambda.Runtime.NODEJS_12_X,
       bundling: {
         define: {
-          'process.env.CLIENT_ID': jsonStringifiedBundlingDefinition(props.clientId),
-          'process.env.CLIENT_SECRET': jsonStringifiedBundlingDefinition(props.clientSecret),
-          'process.env.CLIENT_DOMAIN': jsonStringifiedBundlingDefinition(props.clientDomain),
-          'process.env.CLIENT_PUBLIC_KEY': jsonStringifiedBundlingDefinition(props.clientPublicKey),
-          'process.env.CALLBACK_PATH': jsonStringifiedBundlingDefinition(props.callbackPath),
-          'process.env.JWT_ARGORITHM': jsonStringifiedBundlingDefinition(props.jwtArgorithm),
-          'process.env.AUTHORIZE_URL': jsonStringifiedBundlingDefinition(props.authorizeUrl),
-          'process.env.AUTHORIZE_PARAMS': jsonStringifiedBundlingDefinition(props.authorizeParams),
-          'process.env.DEBUG_ENABLE': jsonStringifiedBundlingDefinition(props.debugEnable),
+          'process.env.CLIENT_ID': JSON.stringify(props.clientId),
+          'process.env.CLIENT_SECRET': JSON.stringify(props.clientSecret),
+          'process.env.CLIENT_DOMAIN': JSON.stringify(props.clientDomain),
+          'process.env.CLIENT_PUBLIC_KEY': JSON.stringify(props.clientPublicKey),
+          'process.env.CALLBACK_PATH': JSON.stringify(props.callbackPath),
+          'process.env.JWT_ARGORITHM': JSON.stringify(props.jwtArgorithm),
+          'process.env.AUTHORIZE_URL': JSON.stringify(props.authorizeUrl),
+          'process.env.AUTHORIZE_PARAMS': JSON.stringify(props.authorizeParams),
+          'process.env.DEBUG_ENABLE': JSON.stringify(props.debugEnable),
         },
       },
     });
@@ -466,7 +466,7 @@ export class GlobalDataIngestion extends Custom {
       runtime: lambda.Runtime.NODEJS_12_X,
       bundling: {
         define: {
-          'process.env.DELIVERY_STREAM_NAME': jsonStringifiedBundlingDefinition(props.firehoseStreamName),
+          'process.env.DELIVERY_STREAM_NAME': JSON.stringify(props.firehoseStreamName),
         },
       },
     });
@@ -482,10 +482,4 @@ export class GlobalDataIngestion extends Custom {
 
     this.lambdaFunction = this.functionVersion;
   }
-}
-
-function jsonStringifiedBundlingDefinition(value: any): string {
-  return JSON.stringify(value)
-    .replace(/"/g, '\\"')
-    .replace(/,/g, '\\,');
 }
