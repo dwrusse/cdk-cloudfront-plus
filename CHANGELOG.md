@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.13](https://github.com/pahudnet/cdk-cloudfront-plus/compare/v0.3.12...v0.3.13) (2021-04-19)
+
+
+### Features
+
+* **lambda-assets:** use nodejs function replace python function ([#91](https://github.com/pahudnet/cdk-cloudfront-plus/issues/91)) ([e6bc1e0](https://github.com/pahudnet/cdk-cloudfront-plus/commit/e6bc1e0aa4b8c7da50c988132249325c46c8c7ad))
+
 ### [0.3.12](https://github.com/pahudnet/cdk-cloudfront-plus/compare/v0.3.11...v0.3.12) (2021-04-19)
 
 ### [0.3.11](https://github.com/pahudnet/cdk-cloudfront-plus/compare/v0.3.10...v0.3.11) (2021-04-18)
