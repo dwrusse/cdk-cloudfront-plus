@@ -301,11 +301,13 @@ export class DefaultDirIndex extends Custom {
 export class CustomErrorPage extends Custom {
   readonly lambdaFunction: lambda.Version;
   constructor(scope: cdk.Construct, id: string) {
-
+    const func = new NodejsFunction(scope, 'CustomErrorPageFunc', {
+      entry: `${EXTENSION_ASSETS_PATH}/cf-custom-error-page/index.ts`,
+      // L@E does not support NODE14 so use NODE12 instead.
+      runtime: lambda.Runtime.NODEJS_12_X,
+    });
     super(scope, id, {
-      runtime: lambda.Runtime.PYTHON_3_7,
-      handler: 'index.handler',
-      code: lambda.AssetCode.fromAsset(`${EXTENSION_ASSETS_PATH}/cf-custom-error-page`),
+      func,
       eventType: cf.LambdaEdgeEventType.ORIGIN_RESPONSE,
       solutionId: 'SO8136',
       templateDescription: 'Cloudfront extension with AWS CDK - Custom Error Page',

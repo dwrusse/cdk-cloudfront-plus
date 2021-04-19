@@ -81,11 +81,9 @@ test('minimal usage', () => {
         LambdaFunctionAssociations: [
           {
             EventType: 'origin-response',
+            IncludeBody: false,
             LambdaFunctionARN: {
-              'Fn::GetAtt': [
-                'CustomErrorPageNestedStackCustomErrorPageNestedStackResource5229F8E2',
-                'Outputs.demostackCustomErrorPageCustomFuncCurrentVersion4B2B308BRef',
-              ],
+              Ref: 'CustomErrorPageFuncCurrentVersion76C88CF0aa1497515b8bcb8e08c885234586a359',
             },
           },
         ],
