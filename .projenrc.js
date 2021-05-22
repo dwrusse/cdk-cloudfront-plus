@@ -1,8 +1,5 @@
 const { AwsCdkConstructLibrary } = require('projen');
-const { Automation } = require('projen-automate-it');
 const { Mergify } = require('projen/lib/github');
-
-const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
 
 const project = new AwsCdkConstructLibrary({
   author: 'Pahud Hsieh',
@@ -12,7 +9,7 @@ const project = new AwsCdkConstructLibrary({
   defaultReleaseBranch: 'main',
   jsiiFqn: 'projen.AwsCdkConstructLibrary',
   name: 'cdk-cloudfront-plus',
-  repositoryUrl: 'https://github.com/pahudnet/cdk-cloudfront-plus.git',
+  repositoryUrl: 'https://github.com/pahud/cdk-cloudfront-plus.git',
   cdkDependencies: [
     '@aws-cdk/core',
     '@aws-cdk/aws-apigatewayv2',
@@ -31,7 +28,6 @@ const project = new AwsCdkConstructLibrary({
     '@types/node',
     'aws-sdk',
     'esbuild',
-    'projen-automate-it',
     'axios',
   ],
   bundledDeps: [
@@ -99,12 +95,6 @@ const mergifyRules = [
 new Mergify(project.github, {
   rules: mergifyRules,
 });
-
-const automation = new Automation(project, {
-  automationToken: AUTOMATION_TOKEN,
-});
-
-automation.projenYarnUpgrade();
 
 const common_exclude = [
   'cdk.out',

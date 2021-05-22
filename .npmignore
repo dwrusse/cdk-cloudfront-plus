@@ -7,6 +7,7 @@
 /.projenrc.js
 /.vscode
 /coverage
+/lib/__tests__
 /src
 /src/__tests__
 /test-reports/
@@ -19,6 +20,7 @@ dependabot.yml
 dist
 images
 junit.xml
+tsconfig.tsbuildinfo
 yarn-error.log
 !.jsii
 !/lib
