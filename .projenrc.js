@@ -61,6 +61,11 @@ const project = new AwsCdkConstructLibrary({
     secret: 'GITHUB_TOKEN',
     allowedUsernames: ['pahud'],
   },
+  
+});
+
+project.package.addField('resolutions', {
+  'trim-newlines': '3.0.1',
 });
 
 const mergifyRules = [
