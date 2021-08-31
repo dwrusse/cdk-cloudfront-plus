@@ -65,10 +65,6 @@ const project = new AwsCdkConstructLibrary({
 
 });
 
-project.package.addField('resolutions', {
-  xmldom: 'github:xmldom/xmldom#0.7.0',
-});
-
 const mergifyRules = [
   {
     name: 'Automatic merge on approval and successful build',
