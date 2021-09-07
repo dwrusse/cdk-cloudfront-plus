@@ -3,16 +3,16 @@
 exports[`basic minimal setting 1`] = `
 Object {
   "Parameters": Object {
-    "AssetParameters2c355797ec5626ec6b1bc51e7f968d489d0004810e6257d6265f42c3bd209787ArtifactHash3FF98EAB": Object {
-      "Description": "Artifact hash for asset \\"2c355797ec5626ec6b1bc51e7f968d489d0004810e6257d6265f42c3bd209787\\"",
+    "AssetParameters6fe7e5359c589997f299da0050139b276c72588ccaf273e68f631f2f603fb5edArtifactHashA0CB1235": Object {
+      "Description": "Artifact hash for asset \\"6fe7e5359c589997f299da0050139b276c72588ccaf273e68f631f2f603fb5ed\\"",
       "Type": "String",
     },
-    "AssetParameters2c355797ec5626ec6b1bc51e7f968d489d0004810e6257d6265f42c3bd209787S3BucketD7DD6D3D": Object {
-      "Description": "S3 bucket for asset \\"2c355797ec5626ec6b1bc51e7f968d489d0004810e6257d6265f42c3bd209787\\"",
+    "AssetParameters6fe7e5359c589997f299da0050139b276c72588ccaf273e68f631f2f603fb5edS3BucketAF8E91AA": Object {
+      "Description": "S3 bucket for asset \\"6fe7e5359c589997f299da0050139b276c72588ccaf273e68f631f2f603fb5ed\\"",
       "Type": "String",
     },
-    "AssetParameters2c355797ec5626ec6b1bc51e7f968d489d0004810e6257d6265f42c3bd209787S3VersionKeyAE556AB9": Object {
-      "Description": "S3 key for asset version \\"2c355797ec5626ec6b1bc51e7f968d489d0004810e6257d6265f42c3bd209787\\"",
+    "AssetParameters6fe7e5359c589997f299da0050139b276c72588ccaf273e68f631f2f603fb5edS3VersionKey2E97BD31": Object {
+      "Description": "S3 key for asset version \\"6fe7e5359c589997f299da0050139b276c72588ccaf273e68f631f2f603fb5ed\\"",
       "Type": "String",
     },
     "AssetParameters90d553a62b70bc897a968de82edcb8734c9635d27a03fc94687ef12bef93bb17ArtifactHash166F4C6F": Object {
@@ -29,7 +29,7 @@ Object {
     },
   },
   "Resources": Object {
-    "HTTP302FromOriginFuncCurrentVersionD9CC98DE07b6df8bb5ef76e0b82d1996c8fe6a5a": Object {
+    "HTTP302FromOriginFuncCurrentVersionD9CC98DE22ddb9dd27b59fa024741f8f4c55eaf5": Object {
       "Properties": Object {
         "FunctionName": Object {
           "Ref": "HTTP302FromOriginFuncFCF29B3D",
@@ -44,7 +44,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameters2c355797ec5626ec6b1bc51e7f968d489d0004810e6257d6265f42c3bd209787S3BucketD7DD6D3D",
+            "Ref": "AssetParameters6fe7e5359c589997f299da0050139b276c72588ccaf273e68f631f2f603fb5edS3BucketAF8E91AA",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -57,7 +57,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters2c355797ec5626ec6b1bc51e7f968d489d0004810e6257d6265f42c3bd209787S3VersionKeyAE556AB9",
+                          "Ref": "AssetParameters6fe7e5359c589997f299da0050139b276c72588ccaf273e68f631f2f603fb5edS3VersionKey2E97BD31",
                         },
                       ],
                     },
@@ -70,7 +70,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters2c355797ec5626ec6b1bc51e7f968d489d0004810e6257d6265f42c3bd209787S3VersionKeyAE556AB9",
+                          "Ref": "AssetParameters6fe7e5359c589997f299da0050139b276c72588ccaf273e68f631f2f603fb5edS3VersionKey2E97BD31",
                         },
                       ],
                     },
@@ -288,7 +288,7 @@ def handler(event, context):
                 "EventType": "origin-response",
                 "IncludeBody": false,
                 "LambdaFunctionARN": Object {
-                  "Ref": "HTTP302FromOriginFuncCurrentVersionD9CC98DE07b6df8bb5ef76e0b82d1996c8fe6a5a",
+                  "Ref": "HTTP302FromOriginFuncCurrentVersionD9CC98DE22ddb9dd27b59fa024741f8f4c55eaf5",
                 },
               },
             ],
