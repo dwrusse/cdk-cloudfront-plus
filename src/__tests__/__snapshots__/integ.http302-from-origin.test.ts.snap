@@ -3,6 +3,18 @@
 exports[`basic minimal setting 1`] = `
 Object {
   "Parameters": Object {
+    "AssetParameters09cb456b155afd0f4e12dcdded390b773881562734d58e2d4d9087604bbd2680ArtifactHashB9A36BF0": Object {
+      "Description": "Artifact hash for asset \\"09cb456b155afd0f4e12dcdded390b773881562734d58e2d4d9087604bbd2680\\"",
+      "Type": "String",
+    },
+    "AssetParameters09cb456b155afd0f4e12dcdded390b773881562734d58e2d4d9087604bbd2680S3BucketA2493A07": Object {
+      "Description": "S3 bucket for asset \\"09cb456b155afd0f4e12dcdded390b773881562734d58e2d4d9087604bbd2680\\"",
+      "Type": "String",
+    },
+    "AssetParameters09cb456b155afd0f4e12dcdded390b773881562734d58e2d4d9087604bbd2680S3VersionKeyDC1FC5F1": Object {
+      "Description": "S3 key for asset version \\"09cb456b155afd0f4e12dcdded390b773881562734d58e2d4d9087604bbd2680\\"",
+      "Type": "String",
+    },
     "AssetParameters90d553a62b70bc897a968de82edcb8734c9635d27a03fc94687ef12bef93bb17ArtifactHash166F4C6F": Object {
       "Description": "Artifact hash for asset \\"90d553a62b70bc897a968de82edcb8734c9635d27a03fc94687ef12bef93bb17\\"",
       "Type": "String",
@@ -15,21 +27,9 @@ Object {
       "Description": "S3 key for asset version \\"90d553a62b70bc897a968de82edcb8734c9635d27a03fc94687ef12bef93bb17\\"",
       "Type": "String",
     },
-    "AssetParametersed58ec0876134fe78fb44f20be1e48a367dba4b01f1cc9ff36c7cf33ca495bb0ArtifactHashC1C896A2": Object {
-      "Description": "Artifact hash for asset \\"ed58ec0876134fe78fb44f20be1e48a367dba4b01f1cc9ff36c7cf33ca495bb0\\"",
-      "Type": "String",
-    },
-    "AssetParametersed58ec0876134fe78fb44f20be1e48a367dba4b01f1cc9ff36c7cf33ca495bb0S3Bucket0AC82BA0": Object {
-      "Description": "S3 bucket for asset \\"ed58ec0876134fe78fb44f20be1e48a367dba4b01f1cc9ff36c7cf33ca495bb0\\"",
-      "Type": "String",
-    },
-    "AssetParametersed58ec0876134fe78fb44f20be1e48a367dba4b01f1cc9ff36c7cf33ca495bb0S3VersionKey929693B5": Object {
-      "Description": "S3 key for asset version \\"ed58ec0876134fe78fb44f20be1e48a367dba4b01f1cc9ff36c7cf33ca495bb0\\"",
-      "Type": "String",
-    },
   },
   "Resources": Object {
-    "HTTP302FromOriginFuncCurrentVersionD9CC98DEdc265dbf1dcb212e560bd5b0ad68a8fc": Object {
+    "HTTP302FromOriginFuncCurrentVersionD9CC98DEfd927bec61541c6954d99250335980cb": Object {
       "Properties": Object {
         "FunctionName": Object {
           "Ref": "HTTP302FromOriginFuncFCF29B3D",
@@ -44,7 +44,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParametersed58ec0876134fe78fb44f20be1e48a367dba4b01f1cc9ff36c7cf33ca495bb0S3Bucket0AC82BA0",
+            "Ref": "AssetParameters09cb456b155afd0f4e12dcdded390b773881562734d58e2d4d9087604bbd2680S3BucketA2493A07",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -57,7 +57,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParametersed58ec0876134fe78fb44f20be1e48a367dba4b01f1cc9ff36c7cf33ca495bb0S3VersionKey929693B5",
+                          "Ref": "AssetParameters09cb456b155afd0f4e12dcdded390b773881562734d58e2d4d9087604bbd2680S3VersionKeyDC1FC5F1",
                         },
                       ],
                     },
@@ -70,7 +70,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParametersed58ec0876134fe78fb44f20be1e48a367dba4b01f1cc9ff36c7cf33ca495bb0S3VersionKey929693B5",
+                          "Ref": "AssetParameters09cb456b155afd0f4e12dcdded390b773881562734d58e2d4d9087604bbd2680S3VersionKeyDC1FC5F1",
                         },
                       ],
                     },
@@ -288,7 +288,7 @@ def handler(event, context):
                 "EventType": "origin-response",
                 "IncludeBody": false,
                 "LambdaFunctionARN": Object {
-                  "Ref": "HTTP302FromOriginFuncCurrentVersionD9CC98DEdc265dbf1dcb212e560bd5b0ad68a8fc",
+                  "Ref": "HTTP302FromOriginFuncCurrentVersionD9CC98DEfd927bec61541c6954d99250335980cb",
                 },
               },
             ],
