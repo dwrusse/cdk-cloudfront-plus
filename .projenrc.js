@@ -58,6 +58,7 @@ const project = new AwsCdkConstructLibrary({
     },
   },
   autoApproveOptions: {
+    ignoreProjen: false,
     secret: 'GITHUB_TOKEN',
     allowedUsernames: ['pahud'],
   },
