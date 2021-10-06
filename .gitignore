@@ -37,7 +37,7 @@ junit.xml
 !/.github/workflows/build.yml
 /dist/changelog.md
 /dist/version.txt
-!/.github/workflows/upgrade.yml
+!/.mergify.yml
 !/.github/pull_request_template.md
 !/src/__tests__/
 !/src/
@@ -57,3 +57,4 @@ dependabot.yml
 demo-assets
 .env
 !/.github/workflows/release.yml
+!/.github/workflows/upgrade-main.yml

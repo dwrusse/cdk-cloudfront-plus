@@ -50,7 +50,6 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-s3-deployment',
   ],
   testdir: 'src/__tests__',
-  mergify: false,
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {
