@@ -82,7 +82,7 @@ function parseCookies(headers) {
 
   return parsedCookie;
 }
-function getKey(config, kid: null) {
+function getKey(config, kid = null) {
   if (config.DEBUG_ENABLE) console.log("getKey: enter, token = " + token + ", config.JWKS_URI = " + config.JWKS_URI + ", config.CLIENT_PUBLIC_KEY = " + config.CLIENT_PUBLIC_KEY);
   if (config.JWKS_URI !== null) {
     const jwks_client = jwksClient({
