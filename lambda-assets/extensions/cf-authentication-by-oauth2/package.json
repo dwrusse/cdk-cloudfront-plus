@@ -15,12 +15,14 @@
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash.escape": "^4.0.1",
-    "querystring": "^0.2.1"
+    "querystring": "^0.2.1",
+    "jwks-rsa": "^2.0.5"
   },
   "bundledDependencies": [
     "querystring",
     "https",
     "jsonwebtoken",
-    "lodash.escape"
+    "lodash.escape",
+    "jwks-rsa"
   ]
 }

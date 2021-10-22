@@ -5,6 +5,7 @@ const querystring = require("querystring");
 const https = require("https");
 const jsonwebtoken = require("jsonwebtoken");
 const escape = require("lodash.escape");
+const jwksClient = require('jwks-rsa');
 
 const PUBLIC_PATHS = [/\/favicons\//];
 
@@ -81,17 +82,27 @@ function parseCookies(headers) {
 
   return parsedCookie;
 }
+function getKey(config, kid: null) {
+  if (config.DEBUG_ENABLE) console.log("getKey: enter, token = " + token + ", config.JWKS_URI = " + config.JWKS_URI + ", config.CLIENT_PUBLIC_KEY = " + config.CLIENT_PUBLIC_KEY);
+  if (config.JWKS_URI !== null) {
+    const jwks_client = jwksClient({
+      jwksUri: config.JWKS_URI
+    });
+    const key = jwks_client.getSigningKey(kid);
+    return key.getPublicKey();
+  };
+  return config.CLIENT_PUBLIC_KEY
+}
 
 function validateToken(config, token) {
   if (config.DEBUG_ENABLE) console.log("validateToken: enter, token = " + token + ", config.JWT_ARGORITHM = " + config.JWT_ARGORITHM);
-
+  const decodedjwt = jsonwebtoken.decode(token, { complete: true });
   if (config.DEBUG_ENABLE) {
-    const decodedjwt = jsonwebtoken.decode(token, {complete: true});
     console.log("validateToken: token header = (next line)");
     console.log(decodedjwt.header);
   }
   try {
-    const decoded = jsonwebtoken.verify(token, config.CLIENT_PUBLIC_KEY, {
+    const decoded = jsonwebtoken.verify(token, getKey(config, decodedjwt.header.kid), {
       algorithms: [config.JWT_ARGORITHM],
     });
 
@@ -253,24 +264,24 @@ function allowPublicPaths(config, request, callback) {
     if (config.DEBUG_ENABLE) console.log("allowPublicPaths: callback request and return true.");
     callback(null, request);
     return true;
-  }else{
+  } else {
     if (config.DEBUG_ENABLE) console.log("allowPublicPaths: return false.");
     return false;
   }
 }
 
-function getBoolean(value){
-  switch(value){
-       case true:
-       case "true":
-       case 1:
-       case "1":
-       case "on":
-       case "yes":
-           return true;
-       default: 
-           return false;
-   }
+function getBoolean(value) {
+  switch (value) {
+    case true:
+    case "true":
+    case 1:
+    case "1":
+    case "on":
+    case "yes":
+      return true;
+    default:
+      return false;
+  }
 }
 
 export function handler(event: any, context: any, callback: any) {
@@ -288,6 +299,7 @@ export function handler(event: any, context: any, callback: any) {
 
     JWT_ARGORITHM: process.env.JWT_ARGORITHM,
     JWT_TOKEN_PATH: process.env.JWT_TOKEN_PATH,
+    JWKS_URI: process.env.JWKS_URI || null,
 
     DEBUG_ENABLE: getBoolean(process.env.DEBUG_ENABLE),
   };
