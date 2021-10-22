@@ -288,7 +288,7 @@ export function handler(event: any, context: any, callback: any) {
   const config = {
     CLIENT_DOMAIN: process.env.CLIENT_DOMAIN,
     CLIENT_ID: process.env.CLIENT_ID,
-    CLIENT_SECRET: process.env.CLIENT_SECRET,
+    CLIENT_SECRET: process.env.CLIENT_SECRET || null,
     CLIENT_PUBLIC_KEY: Buffer.from(process.env.CLIENT_PUBLIC_KEY, 'base64').toString(),
 
     AUTHORIZE_URL: process.env.AUTHORIZE_URL,
