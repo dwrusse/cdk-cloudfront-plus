@@ -82,14 +82,17 @@ function parseCookies(headers) {
 
   return parsedCookie;
 }
-function getKey(config, kid = null) {
-  if (config.DEBUG_ENABLE) console.log("getKey: enter, token = " + token + ", config.JWKS_URI = " + config.JWKS_URI + ", config.CLIENT_PUBLIC_KEY = " + config.CLIENT_PUBLIC_KEY);
+
+async function getKey(config, kid = null) {
+  if (config.DEBUG_ENABLE) console.log("getKey: enter, kid = " + kid + ", config.JWKS_URI = " + config.JWKS_URI + ", config.CLIENT_PUBLIC_KEY = " + config.CLIENT_PUBLIC_KEY);
   if (config.JWKS_URI !== null) {
     const jwks_client = jwksClient({
       jwksUri: config.JWKS_URI
     });
-    const key = jwks_client.getSigningKey(kid);
-    return key.getPublicKey();
+    const key = await jwks_client.getSigningKey(kid);
+    const public_key = key.getPublicKey();
+    console.log(public_key)
+    return public_key
   };
   return config.CLIENT_PUBLIC_KEY
 }
@@ -102,7 +105,8 @@ function validateToken(config, token) {
     console.log(decodedjwt.header);
   }
   try {
-    const decoded = jsonwebtoken.verify(token, getKey(config, decodedjwt.header.kid), {
+    const key = getKey(config, decodedjwt.header.kid);
+    const decoded = jsonwebtoken.verify(token, key, {
       algorithms: [config.JWT_ARGORITHM],
     });
 
@@ -321,3 +325,10 @@ export function handler(event: any, context: any, callback: any) {
     callback(null, request);
   }
 }
+
+var config = {
+  DEBUG_ENABLE: true,
+  JWKS_URI: "https://login.microsoftonline.com/2c946f17-e0c1-4209-b535-73239d631232/discovery/v2.0/keys",
+}
+
+var kid = "nOo3ZDrODXEK1jKWhXslHR_KXEg"
