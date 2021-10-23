@@ -91,7 +91,10 @@ async function getKey(config, kid = null) {
     });
     const key = await jwks_client.getSigningKey(kid);
     const public_key = key.getPublicKey();
-    console.log(public_key)
+    if (config.DEBUG_ENABLE) {
+      console.log("getKey: public_key = (next line)")
+      console.log(public_key)
+    }
     return public_key
   };
   return config.CLIENT_PUBLIC_KEY
