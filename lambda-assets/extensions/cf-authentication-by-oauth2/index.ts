@@ -101,7 +101,7 @@ async function getKey(config, kid = null) {
 }
 
 function validateToken(config, token) {
-  if (config.DEBUG_ENABLE) console.log("validateToken: enter, token = " + token + ", config.JWT_ARGORITHM = " + config.JWT_ARGORITHM);
+  if (config.DEBUG_ENABLE) console.log("validateToken: enter, token = " + token + ", config.JWT_ALGORITHM = " + config.JWT_ALGORITHM);
   const decodedjwt = jsonwebtoken.decode(token, { complete: true });
   if (config.DEBUG_ENABLE) {
     console.log("validateToken: token header = (next line)");
@@ -109,7 +109,7 @@ function validateToken(config, token) {
   }
   try {
     getKey(config, decodedjwt.header.kid).then(key => jsonwebtoken.verify(token, key, {
-      algorithms: [config.JWT_ARGORITHM],
+      algorithms: [config.JWT_ALGORITHM],
     }));
     if (config.DEBUG_ENABLE) console.log("validateToken: return true");
     return true;
@@ -302,7 +302,7 @@ export function handler(event: any, context: any, callback: any) {
 
     CALLBACK_PATH: process.env.CALLBACK_PATH,
 
-    JWT_ARGORITHM: process.env.JWT_ARGORITHM,
+    JWT_ALGORITHM: process.env.JWT_ALGORITHM,
     JWT_TOKEN_PATH: process.env.JWT_TOKEN_PATH,
     JWKS_URI: process.env.JWKS_URI || null,
 
