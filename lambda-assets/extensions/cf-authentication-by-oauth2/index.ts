@@ -326,10 +326,3 @@ export function handler(event: any, context: any, callback: any) {
     callback(null, request);
   }
 }
-
-var config = {
-  DEBUG_ENABLE: true,
-  JWKS_URI: "https://login.microsoftonline.com/2c946f17-e0c1-4209-b535-73239d631232/discovery/v2.0/keys",
-}
-
-var kid = "nOo3ZDrODXEK1jKWhXslHR_KXEg"
