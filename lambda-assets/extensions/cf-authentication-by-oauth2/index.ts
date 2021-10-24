@@ -108,11 +108,9 @@ function validateToken(config, token) {
     console.log(decodedjwt.header);
   }
   try {
-    const key = getKey(config, decodedjwt.header.kid);
-    const decoded = jsonwebtoken.verify(token, key, {
+    getKey(config, decodedjwt.header.kid).then(key => jsonwebtoken.verify(token, key, {
       algorithms: [config.JWT_ARGORITHM],
-    });
-
+    }));
     if (config.DEBUG_ENABLE) console.log("validateToken: return true");
     return true;
   } catch (err) {
