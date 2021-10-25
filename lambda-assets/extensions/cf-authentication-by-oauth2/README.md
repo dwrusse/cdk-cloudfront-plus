@@ -12,13 +12,13 @@ A lambda@edge function for Cloudfront enabling (and requiring) OAuth2 authentica
   CLIENT_ID="{YOUR_AZURE_APPLICATION_ID}"
   CLIENT_SECRET="{YOUR_AZURE_APPLICATION_CLIENT_SECRET}"
   
-  AUTHORIZE_URL ="https://login.microsoftonline.com/{YOUR_TENANT_ID}/oauth2/v2.0/authorize"
+  AUTHORIZE_URL ="https://login.microsoftonline.com/{YOUR_AZURE_TENANT_ID}/oauth2/v2.0/authorize"
   AUTHORIZE_PARAMS="?response_type=code&scope=openid"
   AUTHORIZED_REDIRECTURI_SHOULD_MATCH=true
 
   CALLBACK_PATH="/callback"
 
   JWT_ALGORITHM="RS256"
-  JWT_TOKEN_PATH="/{YOUR_TENANT_ID}/oauth2/v2.0/token"
-  JWKS_URI="https://login.microsoftonline.com/{YOUR_TENANT_ID}/discovery/v2.0/keys"
+  JWT_TOKEN_PATH="/{YOUR_AZURE_TENANT_ID}/oauth2/v2.0/token"
+  JWKS_URI="https://login.microsoftonline.com/{YOUR_AZURE_TENANT_ID}/discovery/v2.0/keys"
   ```
