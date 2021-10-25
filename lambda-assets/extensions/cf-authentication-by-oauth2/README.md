@@ -2,7 +2,9 @@
 
 A lambda@edge function for Cloudfront enabling (and requiring) OAuth2 authentication.
 
-## Azure AD
+## Implementation
+
+### Azure AD
 
 1. Register a new OAuth2 application in Azure AD.
 2. Set the following values in the your `.env` file:
