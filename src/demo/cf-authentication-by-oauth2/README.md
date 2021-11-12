@@ -29,15 +29,29 @@ Usually you will setup one application or client at your identity provider (IdP)
 - Allowed Web Origins: **https://abcabcabcabcab.cloudfront.net**
 - Get your public key at Advanced Settings --> Certificates tab --> Signing Certificate.
 
+### Example: AzureAD
+
+- [Register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
+  - [Add a redirect URI](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application).  
+    - Add a `Web` platform.
+    - Add the `redirect URI`.  This value will need to match the extension's callback URI.
+  - [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
+
 ### Example: KeyCloak
 
 Detailed KeyCloak configuration screenshots describes in this blog post:
 
 - (en) [Using AWS CDK to Deploy Static Website ft. OAuth 2.0 Authorization Code](https://www.ernestchiang.com/en/posts/2021/implementing-cloudfront-lambda-at-edge-oauth2-by-cdk/)
 - (zh) [使用 AWS CDK 快速部署靜態網站，搭配 CloudFront Lambda@Edge 擴充 OAuth 2.0 Authorization Code 授權流程](https://www.ernestchiang.com/zh/posts/2021/implementing-cloudfront-lambda-at-edge-oauth2-by-cdk/)
+
 ## Step 2: duplicate & edit .env
 
-Please make a copy from `dotenv/cf-authentication-by-oauth2/.env-example` to `dotenv/cf-authentication-by-oauth2/.env`, then edit `.env`. Place all the parameters and information from your identity provider (IdP).
+Copy one of the example files listed below to `dotenv/cf-authentication-by-oauth2/.env`, then edit `.env`. Place all the parameters and information from your identity provider (IdP).
+
+### Examples
+- [.env-example](https://github.com/pahud/cdk-cloudfront-plus/blob/main/dotenv/cf-authentication-by-oauth2/.env-example) - Useful for implementations using a single, static, JWK
+- [.env-example-aad](https://github.com/pahud/cdk-cloudfront-plus/blob/main/dotenv/cf-authentication-by-oauth2/.env-example-aad) - AzureAD example.  Also shows the `JWKS_URI` in action, for identity providers that support it.
+
 
 ```sh
 cp dotenv/cf-authentication-by-oauth2/.env-example dotenv/cf-authentication-by-oauth2/.env

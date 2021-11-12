@@ -16,12 +16,11 @@ if (resultDotEnv.error) {
 const app = new cdk.App();
 const stack = new cdk.Stack(app, 'cf-authentication-by-oauth2-demo');
 
-// create the cloudfront distribution with extension(s)
-const OAuth2AuthorizationCodeGrant = new extensions.OAuth2AuthorizationCodeGrant(stack, 'OAuth2AuthorizationCodeGrant', {
+const config = {
   clientDomain: process.env.CLIENT_DOMAIN as string,
   clientId: process.env.CLIENT_ID as string,
   clientSecret: process.env.CLIENT_SECRET as string,
-  clientPublicKey: Buffer.from(process.env.CLIENT_PUBLIC_KEY as string).toString('base64'),
+
 
   authorizeUrl: process.env.AUTHORIZE_URL as string,
   authorizeParams: Buffer.from(process.env.AUTHORIZE_PARAMS as string).toString('base64'),
@@ -29,11 +28,20 @@ const OAuth2AuthorizationCodeGrant = new extensions.OAuth2AuthorizationCodeGrant
 
   callbackPath: process.env.CALLBACK_PATH as string,
 
-  jwtArgorithm: process.env.JWT_ARGORITHM as string,
+
+  jwtAlgorithm: process.env.JWT_ALGORITHM as string,
   jwtTokenPath: process.env.JWT_TOKEN_PATH as string,
 
   debugEnable: process.env.DEBUG_ENABLE as unknown as boolean,
-});
+}
+if (process.env.JWKS_URI) {
+  config.jwksUri = process.env.JWKS_URI as string;
+}
+else {
+  config.clientPublicKey = Buffer.from(process.env.CLIENT_PUBLIC_KEY as string).toString('base64');
+}
+// create the cloudfront distribution with extension(s)
+const OAuth2AuthorizationCodeGrant = new extensions.OAuth2AuthorizationCodeGrant(stack, 'OAuth2AuthorizationCodeGrant', config);
 
 // create Demo S3 Bucket.
 const bucket = new s3.Bucket(stack, 'demoBucket', {

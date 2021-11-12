@@ -5,6 +5,7 @@ const querystring = require("querystring");
 const https = require("https");
 const jsonwebtoken = require("jsonwebtoken");
 const escape = require("lodash.escape");
+const jwksClient = require('jwks-rsa');
 
 const PUBLIC_PATHS = [/\/favicons\//];
 
@@ -82,19 +83,34 @@ function parseCookies(headers) {
   return parsedCookie;
 }
 
-function validateToken(config, token) {
-  if (config.DEBUG_ENABLE) console.log("validateToken: enter, token = " + token + ", config.JWT_ARGORITHM = " + config.JWT_ARGORITHM);
+async function getKey(config, kid) {
+  if (config.DEBUG_ENABLE) console.log("getKey: enter, kid = " + kid + ", config.JWKS_URI = " + config.JWKS_URI + ", config.CLIENT_PUBLIC_KEY = " + config.CLIENT_PUBLIC_KEY);
+  if (config.JWKS_URI !== null) {
+    const jwks_client = jwksClient({
+      jwksUri: config.JWKS_URI
+    });
+    const key = await jwks_client.getSigningKey(kid);
+    const public_key = key.getPublicKey();
+    if (config.DEBUG_ENABLE) {
+      console.log("getKey: public_key = (next line)")
+      console.log(public_key)
+    }
+    return public_key
+  };
+  return config.CLIENT_PUBLIC_KEY
+}
 
+function validateToken(config, token) {
+  if (config.DEBUG_ENABLE) console.log("validateToken: enter, token = " + token + ", config.JWT_ALGORITHM = " + config.JWT_ALGORITHM);
+  const decodedjwt = jsonwebtoken.decode(token, { complete: true });
   if (config.DEBUG_ENABLE) {
-    const decodedjwt = jsonwebtoken.decode(token, {complete: true});
     console.log("validateToken: token header = (next line)");
     console.log(decodedjwt.header);
   }
   try {
-    const decoded = jsonwebtoken.verify(token, config.CLIENT_PUBLIC_KEY, {
-      algorithms: [config.JWT_ARGORITHM],
-    });
-
+    getKey(config, decodedjwt.header.kid).then(key => jsonwebtoken.verify(token, key, {
+      algorithms: [config.JWT_ALGORITHM],
+    }));
     if (config.DEBUG_ENABLE) console.log("validateToken: return true");
     return true;
   } catch (err) {
@@ -253,24 +269,24 @@ function allowPublicPaths(config, request, callback) {
     if (config.DEBUG_ENABLE) console.log("allowPublicPaths: callback request and return true.");
     callback(null, request);
     return true;
-  }else{
+  } else {
     if (config.DEBUG_ENABLE) console.log("allowPublicPaths: return false.");
     return false;
   }
 }
 
-function getBoolean(value){
-  switch(value){
-       case true:
-       case "true":
-       case 1:
-       case "1":
-       case "on":
-       case "yes":
-           return true;
-       default: 
-           return false;
-   }
+function getBoolean(value) {
+  switch (value) {
+    case true:
+    case "true":
+    case 1:
+    case "1":
+    case "on":
+    case "yes":
+      return true;
+    default:
+      return false;
+  }
 }
 
 export function handler(event: any, context: any, callback: any) {
@@ -278,7 +294,6 @@ export function handler(event: any, context: any, callback: any) {
     CLIENT_DOMAIN: process.env.CLIENT_DOMAIN,
     CLIENT_ID: process.env.CLIENT_ID,
     CLIENT_SECRET: process.env.CLIENT_SECRET,
-    CLIENT_PUBLIC_KEY: Buffer.from(process.env.CLIENT_PUBLIC_KEY, 'base64').toString(),
 
     AUTHORIZE_URL: process.env.AUTHORIZE_URL,
     AUTHORIZE_PARAMS: Buffer.from(process.env.AUTHORIZE_PARAMS, 'base64').toString(),
@@ -286,11 +301,17 @@ export function handler(event: any, context: any, callback: any) {
 
     CALLBACK_PATH: process.env.CALLBACK_PATH,
 
-    JWT_ARGORITHM: process.env.JWT_ARGORITHM,
+    JWT_ALGORITHM: process.env.JWT_ALGORITHM,
     JWT_TOKEN_PATH: process.env.JWT_TOKEN_PATH,
 
     DEBUG_ENABLE: getBoolean(process.env.DEBUG_ENABLE),
   };
+  if (process.env.JWKS_URI) {
+    config.JWKS_URI = process.env.JWKS_URI
+  }
+  else {
+    config.CLIENT_PUBLIC_KEY = Buffer.from(process.env.CLIENT_PUBLIC_KEY, 'base64').toString()
+  }
 
   const request = event.Records[0].cf.request;
 
