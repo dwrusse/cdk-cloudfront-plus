@@ -406,7 +406,8 @@ export interface OAuth2AuthorizationCodeGrantProps {
 
   readonly callbackPath: string;
 
-  readonly jwtArgorithm: string;
+  readonly jwksUri: string;
+  readonly jwtAlgorithm: string;
   readonly jwtTokenPath: string;
 
   readonly debugEnable: boolean;
@@ -434,7 +435,8 @@ export class OAuth2AuthorizationCodeGrant extends Custom {
 
           'process.env.CALLBACK_PATH': JSON.stringify(props.callbackPath),
 
-          'process.env.JWT_ARGORITHM': JSON.stringify(props.jwtArgorithm),
+          'process.env.JWKS_URI': JSON.stringify(props.jwksUri),
+          'process.env.JWT_ALGORITHM': JSON.stringify(props.jwtAlgorithm),
           'process.env.JWT_TOKEN_PATH': JSON.stringify(props.jwtTokenPath),
 
           'process.env.DEBUG_ENABLE': JSON.stringify(props.debugEnable),

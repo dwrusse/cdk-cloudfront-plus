@@ -294,7 +294,6 @@ export function handler(event: any, context: any, callback: any) {
     CLIENT_DOMAIN: process.env.CLIENT_DOMAIN,
     CLIENT_ID: process.env.CLIENT_ID,
     CLIENT_SECRET: process.env.CLIENT_SECRET,
-    CLIENT_PUBLIC_KEY: Buffer.from(process.env.CLIENT_PUBLIC_KEY, 'base64').toString() || null,
 
     AUTHORIZE_URL: process.env.AUTHORIZE_URL,
     AUTHORIZE_PARAMS: Buffer.from(process.env.AUTHORIZE_PARAMS, 'base64').toString(),
@@ -304,10 +303,15 @@ export function handler(event: any, context: any, callback: any) {
 
     JWT_ALGORITHM: process.env.JWT_ALGORITHM,
     JWT_TOKEN_PATH: process.env.JWT_TOKEN_PATH,
-    JWKS_URI: process.env.JWKS_URI || null,
 
     DEBUG_ENABLE: getBoolean(process.env.DEBUG_ENABLE),
   };
+  if (process.env.JWKS_URI) {
+    config.JWKS_URI = process.env.JWKS_URI
+  }
+  else {
+    config.CLIENT_PUBLIC_KEY = Buffer.from(process.env.CLIENT_PUBLIC_KEY, 'base64').toString()
+  }
 
   const request = event.Records[0].cf.request;
 
